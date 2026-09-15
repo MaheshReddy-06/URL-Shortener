@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Url Shortener</title>
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous" />
+  <style>
+    .card {
+      background-color: #FFFFFF;
+    }
+
+    h2 {
+      color: #2563EB;
+    }
+
+    .form-control {
+      background-color: #F8FAFC;
+      border: 1px solid #CBD5E1;
+    }
+
+    .form-control:focus {
+      border-color: #2563EB;
+      box-shadow: 0 0 0 0.2rem rgba(37, 99, 235, 0.25);
+    }
+
+    .btn-success {
+      background-color: #2563EB;
+      border-color: #2563EB;
+    }
+
+    .btn-success:hover {
+      background-color: #1D4ED8;
+      border-color: #1D4ED8;
+    }
+  </style>
+</head>
+
+<body style="background-color: #0F172A; height: 100vh; display: flex; align-items: center; justify-content: center;">
+  <section class=" bg-image " style="width:95%;">
+    <div class="mask d-flex align-items-center h-100 gradient-custom-3">
+      <div class="container h-100">
+        <div class="row d-flex justify-content-center align-items-center h-100">
+          <div class="col-12 col-md-9 col-lg-7 col-xl-6">
+            <div class="card" style="border-radius: 15px; margin: auto;">
+              <div class="card-body p-5">
+                <h2 class="text-uppercase text-center mb-5">URL Shortener</h2>
+
+                <form id="myForm" method="POST">
+                  {% csrf_token %} {% for hidden_field in form.hidden_fields %}
+                  {{ hidden_field.errors }} {{ hidden_field }} {% endfor %}
+                  {% for field in form.visible_fields %}
+
+                  <div class="form-outline mb-4">
+                    <input
+                      placeholder="{% if field.name == 'link' %}Enter the URL here{% else %}Enter your custom alias{% endif %}"
+                      name="{{ field.name }}" id="{{ field.id_for_label }}" type="{{ field.widget_type }}"
+                      class="form-control form-control-lg" />
+                  </div>
+
+                  {% endfor %}
+
+                  <div class="d-flex justify-content-center">
+                    <button type="submit" class="btn btn-success btn-lg gradient-custom-4">
+                      Submit
+                    </button>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+    crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.8/clipboard.min.js"></script>
+
+  <script>
+    const linkFromBackend = "{{ link|escapejs }}";
+
+    if (linkFromBackend) {
+
+      if (linkFromBackend === "Alias Already Taken") {
+
+        Swal.fire({
+          icon: "warning",
+          title: "Alias Already Taken",
+          text: "Please choose a different alias.",
+          confirmButtonText: "OK"
+        });
+
+      } else {
+
+        Swal.fire({
+          icon: "success",
+          title: "Shortened URL",
+          html: `
+                    <p>Your shortened URL is:</p>
+
+                    <a href="${linkFromBackend}" target="_blank">
+                        ${linkFromBackend}
+                    </a>
+
+                    <br><br>
+
+                    <button id="copyButton" class="btn btn-primary">
+                        Copy
+                    </button>
+                `,
+          confirmButtonText: "OK",
+          allowOutsideClick: false
+        });
+
+        document
+          .getElementById("copyButton")
+          .addEventListener("click", function () {
+
+            navigator.clipboard.writeText(linkFromBackend);
+
+            this.innerText = "Copied!";
+          });
+      }
+    }
+  </script>
+</body>
+
+</html>
