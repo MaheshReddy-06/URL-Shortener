@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 # URL-Shortener
 
 A simple and fast URL shortener built using **Python and Django**. This project allows users to convert long URLs into shorter, more manageable links, making them easier to share, tweet, or send via email.
