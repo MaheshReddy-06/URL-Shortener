@@ -57,7 +57,7 @@ For example:
 This project is useful when a long URL needs to be made shorter, simpler, and easier to share. Custom aliases also make URLs more memorable and readable. It can be useful for sharing links through social media, documents, presentations, websites, and other online platforms.
 
 ## 🔄 Workflow
->>>>>>> 56c73270a51288c1bcba2b6c19e9438507cf437a
+>>>>>>>
 
 ```text
 User
