@@ -119,4 +119,4 @@ The **URL Shortener** provides a simple and efficient way to create short URLs u
 ## ✅ Conclusion
 
 The **URL Shortener** provides a simple and efficient way to create short URLs with custom aliases. The project demonstrates how Django can handle user input, validate aliases, store URL mappings, generate short links, and redirect users to the original URLs.
->>>>>>> 56c73270a51288c1bcba2b6c19e9438507cf437a
+>>>>>>>
